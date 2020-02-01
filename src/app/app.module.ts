@@ -6,6 +6,9 @@ import { QueryInputComponent } from "./query-input/query-input.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { createCustomElement } from "@angular/elements";
+import { environment } from "./../environments/environment";
+import { Injector } from "@angular/core";
 import {
   MatInputModule,
   MatTableModule,
@@ -29,6 +32,25 @@ import {
     MatSortModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [AppComponent, QueryInputComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private injector: Injector) {}
+  ngDoBootstrap() {
+    // don't bootstrap AppComponent if in production
+    // development will bootstrap AppComponent, which references the component
+    // production will bootstrap custom element
+
+    if (environment.production) {
+      const el = createCustomElement(QueryInputComponent, {
+        injector: this.injector
+      });
+      customElements.define("query-input", el);
+    } else if (!environment.production) {
+      const appRootEl = createCustomElement(AppComponent, {
+        injector: this.injector
+      });
+      customElements.define("app-root", appRootEl);
+    }
+  }
+}
