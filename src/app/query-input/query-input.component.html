@@ -1,0 +1,64 @@
+<div class="flex-container">
+  <div>
+    <div>Single or Min Date</div>
+    <mat-form-field class="form-field-width">
+      <input
+        matInput
+        [matDatepicker]="pickerMin"
+        placeholder="Choose a date"
+        (dateChange)="dateChangeMin('change', $event)"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerMin"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerMin></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <div>Max Date</div>
+    <mat-form-field class="form-field-width">
+      <input
+        matInput
+        [matDatepicker]="pickerMax"
+        placeholder="Choose a date"
+        (dateChange)="dateChangeMax('change', $event)"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerMax"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerMax></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Ticker Column -->
+    <ng-container matColumnDef="ticker">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Ticker
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.ticker }} </mat-cell>
+    </ng-container>
+
+    <!-- Buy Date Column -->
+    <ng-container matColumnDef="buyDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Buy Date
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.buyDate }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [pageIndex]="0"
+    [pageSize]="10"
+    [length]="totalCount"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="pageHandler($event)"
+  ></mat-paginator>
+</div>
