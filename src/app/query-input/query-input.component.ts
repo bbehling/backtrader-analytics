@@ -1,10 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import {
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  PageEvent
-} from "@angular/material";
+import { MatPaginator, MatTableDataSource, PageEvent } from "@angular/material";
 import { DataService } from "../data.service";
 import * as moment from "moment";
 
@@ -18,7 +13,6 @@ export class QueryInputComponent {
   dataSource: MatTableDataSource<TickerData>;
   totalCount = 0;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private dataService: DataService) {
     this.dataSource = new MatTableDataSource([]);
@@ -65,6 +59,10 @@ export class QueryInputComponent {
     this.dataService
       .getGolenCrossData(this.query)
       .subscribe((response: Result) => {
+        // TODO - find a away to format date without a foreach
+        response.goldenCrosses.forEach((element: TickerData) => {
+          element.buyDate = moment(element.buyDate).format("YYYY-MM-DD");
+        });
         this.dataSource.data = response.goldenCrosses;
         this.totalCount = response.totalCount;
       });
