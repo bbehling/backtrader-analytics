@@ -13,8 +13,7 @@ import {
   MatInputModule,
   MatTableModule,
   MatPaginatorModule,
-  MatNativeDateModule,
-  MatSortModule
+  MatNativeDateModule
 } from "@angular/material";
 
 @NgModule({
@@ -28,8 +27,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
+    MatPaginatorModule
   ],
   providers: [],
   entryComponents: [AppComponent, QueryInputComponent]
