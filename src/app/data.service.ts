@@ -10,7 +10,7 @@ export class DataService {
 
   getGolenCrossData(data) {
     return this.http.post(
-      `${environment.apiUrl}/goldencross`,
+      `${environment.apiUrl}/goldencross/date`,
       JSON.stringify(data),
       {
         headers: { "Content-Type": "application/json" }
